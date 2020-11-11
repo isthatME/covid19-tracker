@@ -1,18 +1,32 @@
+.content{
+    display: flex;
+    justify-content: center;
+}
+.content-wrapper {
+    display: flex;
+}
+.content-wrapper > h1{
+    margin-right: 20px;
+}
+/* cards */
 .country-card{
-    background-color: rgb(5, 5, 5,0.85);
+    background-color: rgba(0,0,0,0.2);
+    border-radius: 10px;
     display: inline-flex;
     margin-right: 5%;
-    height: 20rem;
-    width: 27rem;
+    height: 10rem;
+    width: auto;
     justify-content: center;
 }
 .country-stats{
     display: flex;
     flex-direction: column;
-    width: 300px;
+    justify-content: center;
+    width: 20rem;
 }
 .country-stats > h1{
-    margin-left: 40px;
+    display: flex;
+    justify-content: center;
 }
 .country-stats p {
     margin: 0 5%;
@@ -21,4 +35,18 @@
 .country-stats-wrapper{
     display: flex;
     justify-content: center;
+}
+
+/* icon */
+.confirmed-icon, .recovered-icon, .deaths-icon {
+    margin-right: 5px;
+}
+.confirmed-icon {
+    color: chartreuse;
+}
+.recovered-icon {
+    color: rgb(230, 11, 11);
+}
+.deaths-icon {
+    color: rgb(151, 151, 151);
 }

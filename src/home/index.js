@@ -17,30 +17,32 @@ function Index() {
     }, [])
 
     return (
-        <div cl assName="App">
-            <h1>Estatistica em alguns estados</h1>
-            {state.filter(e => e.country === 'Brazil' || e.country === 'Italy' || e.country === 'China').map(filteredCountry => (
-                <div className="country-card">
-                    <div className="country-stats">
-                        <h1>Covid no {filteredCountry.country}</h1>
-                        <div className="country-stats-wrapper">
-                            <p>
-                                <FaCheck></FaCheck>
-                                {filteredCountry.cases}
+        <div className="content">
+            <div className="content-wrapper">
+                <h1>Estatistica em alguns estados</h1>
+                {state.filter(e => e.country === 'Brazil' || e.country === 'Italy' || e.country === 'China').map(filteredCountry => (
+                    <div className="country-card">
+                        <div className="country-stats">
+                            <h1>Covid no {filteredCountry.country}</h1>
+                            <div className="country-stats-wrapper">
+                                <p>
+                                    <FaCheck className="confirmed-icon"></FaCheck>
+                                    {filteredCountry.confirmed}
                                 </p>
-                            <p>
-                                <GiLifeBar></GiLifeBar>
-                                {filteredCountry.recovered}
-                            </p>
-                            <p>
-                                <FaSkull></FaSkull>
-                                {filteredCountry.deaths}
-                            </p>
+                                <p>
+                                    <GiLifeBar className="recovered-icon"></GiLifeBar>
+                                    {filteredCountry.recovered}
+                                </p>
+                                <p>
+                                    <FaSkull className="deaths-icon"></FaSkull>
+                                    {filteredCountry.deaths}
+                                </p>
+                            </div>
                         </div>
                     </div>
-                </div>
 
-            ))}
+                ))}
+            </div>
 
         </div>
     );
