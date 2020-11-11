@@ -1,0 +1,24 @@
+.country-card{
+    background-color: rgb(5, 5, 5,0.85);
+    display: inline-flex;
+    margin-right: 5%;
+    height: 20rem;
+    width: 27rem;
+    justify-content: center;
+}
+.country-stats{
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+}
+.country-stats > h1{
+    margin-left: 40px;
+}
+.country-stats p {
+    margin: 0 5%;
+
+}
+.country-stats-wrapper{
+    display: flex;
+    justify-content: center;
+}
