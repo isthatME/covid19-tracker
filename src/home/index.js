@@ -9,7 +9,7 @@ function Index() {
 
     useEffect(() => {
         async function fetchData() {
-            const req = await Axios.get('https://covid19-brazil-api.now.sh/api/report/v1/countries')
+            const req = await Axios.get('https://covid19-brazil-api.now.sh/api/report/v1/countries/')
             setState(req.data.data)
             return req
         }
@@ -18,31 +18,37 @@ function Index() {
 
     return (
         <div className="content">
-            <div className="content-wrapper">
-                <h1>Estatistica em alguns estados</h1>
-                {state.filter(e => e.country === 'Brazil' || e.country === 'Italy' || e.country === 'China').map(filteredCountry => (
-                    <div className="country-card">
-                        <div className="country-stats">
-                            <h1>Covid no {filteredCountry.country}</h1>
-                            <div className="country-stats-wrapper">
-                                <p>
-                                    <FaCheck className="confirmed-icon"></FaCheck>
-                                    {filteredCountry.confirmed}
-                                </p>
-                                <p>
-                                    <GiLifeBar className="recovered-icon"></GiLifeBar>
-                                    {filteredCountry.recovered}
-                                </p>
-                                <p>
-                                    <FaSkull className="deaths-icon"></FaSkull>
-                                    {filteredCountry.deaths}
-                                </p>
+            <section className="card-highlights">
+                <div className="card-title">
+                    <h1>Estatistica em alguns países</h1>
+                </div>
+                <div className="card-wrapper">
+                    {state.filter(e => e.country === 'Brazil' || e.country === 'Italy' || e.country === 'China' || e.country === 'Argentina').map(filteredCountry => (
+                        <div className="country-card">
+                            <div className="country-stats">
+                                <h1>Covid Status: {filteredCountry.country}</h1>
+                                <div className="country-stats-wrapper">
+                                    <p>
+                                        <FaCheck className="confirmed-icon"></FaCheck>
+                                        {filteredCountry.confirmed}
+                                    </p>
+                                    <p>
+                                        <GiLifeBar className="recovered-icon"></GiLifeBar>
+                                        {filteredCountry.recovered}
+                                    </p>
+                                    <p>
+                                        <FaSkull className="deaths-icon"></FaSkull>
+                                        {filteredCountry.deaths}
+                                    </p>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    ))}
+                </div>
+            </section>
+            <section className="table-filter">
 
-                ))}
-            </div>
+            </section>
 
         </div>
     );

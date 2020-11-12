@@ -1,11 +1,20 @@
 .content{
     display: flex;
-    justify-content: center;
+    
 }
-.content-wrapper {
+.card-highlights {
+    width: 100%;
+}
+.card-title {
     display: flex;
+    justify-content: center;
+    margin: 5rem;
 }
-.content-wrapper > h1{
+.card-wrapper {
+    display: flex;
+    justify-content: space-around;
+}
+.card-wrapper > h1{
     margin-right: 20px;
 }
 /* cards */
@@ -13,6 +22,7 @@
     background-color: rgba(0,0,0,0.2);
     border-radius: 10px;
     display: inline-flex;
+    margin-bottom: 2rem;
     margin-right: 5%;
     height: 10rem;
     width: auto;
