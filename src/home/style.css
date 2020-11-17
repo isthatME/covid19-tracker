@@ -56,3 +56,54 @@
 .deaths-icon {
     color: rgb(151, 151, 151);
 }
+
+/* table */
+
+.card-table-wrapper {
+    display: flex;
+    justify-content: center;
+}
+.card-table-scroll {
+    border-radius: 20px;
+    width: fit-content;
+    background-color: rgba(0,0,0,0.2);
+    overflow: auto;
+    height: 600px;
+}
+.teste {
+    overflow-y: auto; 
+    max-height: 600px;
+}
+.content-table{
+    border-collapse: collapse;
+    font-size: 1.2em;
+}
+.content-table.sticky th{
+    position: sticky;
+    top: 0;
+    background-color:  rgba(0,0,0);
+}
+.card-table-scrol  {
+    width: 100%;
+}
+.card-table-scroll thead tr {
+    text-align: left;
+    
+    border-bottom: solid 1px rgba(255,255,255,0.1);
+}
+.card-table-scroll th,
+.card-table-scroll td {
+    border-bottom: solid 1px rgba(255,255,255,0.1);
+    padding: 1rem;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+::-webkit-scrollbar {
+    width: 6px;
+}
+::-webkit-scrollbar-thumb {
+    background-color: chartreuse;
+    border-radius: 50px;
+}

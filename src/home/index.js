@@ -1,4 +1,5 @@
 import Axios from 'axios'
+import '../home/style.css'
 import React, { useEffect, useState } from 'react'
 import '../home/style.css'
 import { FaSkull, FaCheck } from "react-icons/fa";
@@ -8,7 +9,6 @@ function Index() {
     const [stateHighLighted, setStateHighLigth] = useState([])
     const [filteredTable, setFilteredTable] = useState([])
     const [tableQuery, setTableQuery] = useState('');
-
 
     useEffect(() => {
         async function fetchData() {
@@ -36,7 +36,7 @@ function Index() {
                 </div>
                 <div className="card-wrapper">
                     {stateHighLighted.filter(e => e.country === 'Brazil' || e.country === 'Italy' || e.country === 'China' || e.country === 'Argentina').map(filteredCountry => (
-                        <div className="country-card">
+                        <div className="country-card" key={filteredCountry.country}>
                             <div className="country-stats">
                                 <h1>Covid Status: {filteredCountry.country}</h1>
                                 <div className="country-stats-wrapper">
@@ -67,24 +67,28 @@ function Index() {
                     </select>
                 </div>
                 <div className="card-table-wrapper">
-                    <table className="content-table">
-                        <thead>
-                            <tr>
-                                {tableQuery === '' ? <th>Estados</th> : <th>Países</th>}
-                                <th>Confirmados</th>
-                                <th>Mortes</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {filteredTable.map(filteredCoutryState => (
+                    <div className="card-table-scroll">
+                        <table className="content-table sticky">
+                            <thead>
                                 <tr>
-                                    {tableQuery === '' ? <td>{filteredCoutryState.state}</td> : <td>{filteredCoutryState.country}</td>}
-                                <td>{filteredCoutryState.cases}</td>
-                                <td>{filteredCoutryState.deaths}</td>
+                                    {tableQuery === '' ? <th>Estados</th> : <th>Países</th>}
+                                    <th>Confirmados</th>
+                                    <th>Mortes</th>
+                                    <th>Dias em lockDown</th>
                                 </tr>
-                            ))}
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                                {filteredTable.map(filteredCoutryState => (
+                                    <tr key={filteredCoutryState.uf}>
+                                        {tableQuery === '' ? <td>{filteredCoutryState.state}</td> : <td>{filteredCoutryState.country}</td>}
+                                        <td>{filteredCoutryState.cases}</td>
+                                        <td>{filteredCoutryState.deaths}</td>
+                                        <td>{Math.floor(Math.random() * (300 - 40) + 40)}</td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </section>
 
