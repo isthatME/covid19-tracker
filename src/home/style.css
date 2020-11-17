@@ -36,7 +36,6 @@
 }
 .country-stats p {
     margin: 0 5%;
-
 }
 .country-stats-wrapper{
     display: flex;
@@ -44,8 +43,17 @@
 }
 
 /* icon */
-.confirmed-icon, .recovered-icon, .deaths-icon {
+.confirmed-icon, .recovered-icon, .deaths-icon, .lockdown-icon, .money-icon, .leitos-icon, .location-icon{
     margin-right: 5px;
+}
+.money-icon {
+    color: green;
+}
+.leitos-icon {
+    color: lightgoldenrodyellow;
+}
+.location-icon {
+    color: rgb(211, 68, 68);
 }
 .confirmed-icon {
     color: chartreuse;
@@ -58,32 +66,48 @@
 }
 
 /* table */
+tbody{
+    display: block;  
+    overflow: auto;
+    height: 600px;
+  }
+  thead, tbody tr {
+    display:table;
+    width:100%;
+    table-layout:fixed;/* even columns width , fix width of table too*/
+}
+thead {
+    width: calc( 100% - 1em )/* scrollbar is average 1em/16px width, remove it from thead width */
+}
+table {
+    width: 70rem;
+}
 
 .card-table-wrapper {
     display: flex;
     justify-content: center;
 }
 .card-table-scroll {
-    border-radius: 20px;
     width: fit-content;
     background-color: rgba(0,0,0,0.2);
-    overflow: auto;
-    height: 600px;
-}
-.teste {
-    overflow-y: auto; 
-    max-height: 600px;
 }
 .content-table{
+    margin: 0 3rem;
+}
+.scroll-data{
+
+
+}
+.content-table.sticky{
     border-collapse: collapse;
     font-size: 1.2em;
 }
 .content-table.sticky th{
     position: sticky;
     top: 0;
-    background-color:  rgba(0,0,0);
 }
 .card-table-scrol  {
+    padding: 22rem;
     width: 100%;
 }
 .card-table-scroll thead tr {
