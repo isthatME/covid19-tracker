@@ -9,17 +9,7 @@ function Index() {
     const [stateHighLighted, setStateHighLigth] = useState([])
     const [filteredTable, setFilteredTable] = useState([])
     const [tableQuery, setTableQuery] = useState('');
-    const [title, setTitle] = useState('')
-    var teste;
-
-
-    function handleUpdate() {
-        teste = filteredTable.filter(e => e.uf === title.toUpperCase())
-        console.log(teste)
-        teste[0].state = "SERGIPE"
-        console.log(teste)
-    }
-
+    
     useEffect(() => {
         async function fetchData() {
             const req = await Axios.get(`https://covid19-brazil-api.now.sh/api/report/v1/countries`)
@@ -30,13 +20,72 @@ function Index() {
     }, [])
     useEffect(() => {
         async function fetchQuery() {
-            const req = await Axios.get(`https://covid19-brazil-api.now.sh/api/report/v1/${tableQuery}`)
-            setFilteredTable(req.data.data)
-            return req
+            if(tableQuery === '' || tableQuery ==='countries'){
+                const req = await Axios.get(`https://covid19-brazil-api.now.sh/api/report/v1/${tableQuery}`)
+                setFilteredTable(req.data.data)
+                return req
+            }else{
+                const req = await Axios.get(`https://corona.lmao.ninja/v2/continents`)
+                setFilteredTable(req.data)
+                return req
+            }
+          
         }
         fetchQuery();
-    }, [tableQuery, teste])
+    }, [tableQuery])
 
+    function filterTableData(filteredCoutryState){
+        switch (tableQuery) {
+            case '':
+                return(
+                    <td>{filteredCoutryState.state}</td>
+                )
+            case 'countries':
+                return(
+                    <td>{filteredCoutryState.country}</td>
+                )
+            case 'continents':
+                return(
+                    <td>{filteredCoutryState.continent}</td>
+                )
+        
+            default:
+                return(
+                    <td>{filteredCoutryState.state}</td>
+                )
+        }
+    }
+    function filterTableHead() {
+        switch (tableQuery) {
+            case '':
+                return (<th>
+                    <FaLocationArrow className="location-icon"></FaLocationArrow>
+                            Estados
+                </th>)
+            case 'countries':
+                return (
+                    <th>
+                        <FaLocationArrow></FaLocationArrow>
+                                Países
+                    </th>
+                )
+            case 'continents':
+                return (
+                    <th>
+                        <FaLocationArrow></FaLocationArrow>
+                        Continentes
+                    </th>
+                )
+
+            default:
+                return (<th>
+                    <FaLocationArrow className="location-icon"></FaLocationArrow>
+                            Estados
+                </th>)
+
+        }
+
+    }
 
     return (
         <div className="content">
@@ -74,6 +123,7 @@ function Index() {
                     <select id="" onChange={e => setTableQuery(e.target.value)}>
                         <option value="">Estados</option>
                         <option value="countries">Países</option>
+                        <option value="continents">Continentes</option>
                     </select>
                 </div>
                 <div className="card-table-wrapper">
@@ -81,17 +131,7 @@ function Index() {
                         <table className="content-table sticky">
                             <thead>
                                 <tr>
-
-                                    {tableQuery === '' ?
-                                        <th>
-                                            <FaLocationArrow className="location-icon"></FaLocationArrow>
-                                                        Estados
-                                        </th> :
-                                        <th>
-                                            <FaLocationArrow></FaLocationArrow>
-                                                        Países
-                                        </th>}
-
+                                    {filterTableHead()}
                                     <th>
                                         <FaCheck className="confirmed-icon"></FaCheck>
                                             Confirmados
@@ -117,7 +157,7 @@ function Index() {
                             <tbody >
                                 {filteredTable.map(filteredCoutryState => (
                                     <tr key={filteredCoutryState.uf}>
-                                        {tableQuery === '' ? <td>{filteredCoutryState.state}</td> : <td>{filteredCoutryState.country}</td>}
+                                        {filterTableData(filteredCoutryState)}
                                         <td>{filteredCoutryState.cases}</td>
                                         <td>{filteredCoutryState.deaths}</td>
                                         <td>{Math.floor(Math.random() * (300 - 40) + 40)}</td>
@@ -130,13 +170,14 @@ function Index() {
                     </div>
                 </div>
                 <div className="top-five-cards">
+
                 </div>
             </section>
 
 
 
-            <input type="text" onChange={e => setTitle(e.target.value)} />
-            <button onClick={handleUpdate}>update</button>
+            {/* <input type="text" onChange={e => setTitle(e.target.value)} />
+            <button onClick={handleUpdate}>update</button> */}
         </div>
     );
 }
