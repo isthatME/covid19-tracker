@@ -9,7 +9,15 @@ function Index() {
     const [stateHighLighted, setStateHighLigth] = useState([])
     const [filteredTable, setFilteredTable] = useState([])
     const [tableQuery, setTableQuery] = useState('');
-    
+    const [res, setRes] = useState([])
+
+    if (res.length === 0) {
+        getStats()
+    }
+    var highestDeathsByState = res.filter((e, i) => { if (i < 5) return e });
+
+
+
     useEffect(() => {
         async function fetchData() {
             const req = await Axios.get(`https://covid19-brazil-api.now.sh/api/report/v1/countries`)
@@ -20,37 +28,41 @@ function Index() {
     }, [])
     useEffect(() => {
         async function fetchQuery() {
-            if(tableQuery === '' || tableQuery ==='countries'){
+            if (tableQuery === '' || tableQuery === 'countries') {
                 const req = await Axios.get(`https://covid19-brazil-api.now.sh/api/report/v1/${tableQuery}`)
                 setFilteredTable(req.data.data)
                 return req
-            }else{
+            } else {
                 const req = await Axios.get(`https://corona.lmao.ninja/v2/continents`)
                 setFilteredTable(req.data)
                 return req
             }
-          
+
         }
         fetchQuery();
     }, [tableQuery])
 
-    function filterTableData(filteredCoutryState){
+    async function getStats() {
+        const req = await Axios.get(`https://covid19-brazil-api.now.sh/api/report/v1/`)
+        setRes(req.data.data);
+    }
+    function filterTableData(filteredCoutryState) {
         switch (tableQuery) {
             case '':
-                return(
+                return (
                     <td>{filteredCoutryState.state}</td>
                 )
             case 'countries':
-                return(
+                return (
                     <td>{filteredCoutryState.country}</td>
                 )
             case 'continents':
-                return(
+                return (
                     <td>{filteredCoutryState.continent}</td>
                 )
-        
+
             default:
-                return(
+                return (
                     <td>{filteredCoutryState.state}</td>
                 )
         }
@@ -65,14 +77,14 @@ function Index() {
             case 'countries':
                 return (
                     <th>
-                        <FaLocationArrow></FaLocationArrow>
+                        <FaLocationArrow className="location-icon"></FaLocationArrow>
                                 Países
                     </th>
                 )
             case 'continents':
                 return (
                     <th>
-                        <FaLocationArrow></FaLocationArrow>
+                        <FaLocationArrow className="location-icon"></FaLocationArrow>
                         Continentes
                     </th>
                 )
@@ -126,58 +138,71 @@ function Index() {
                         <option value="continents">Continentes</option>
                     </select>
                 </div>
-                <div className="card-table-wrapper">
-                    <div className="card-table-scroll">
-                        <table className="content-table sticky">
-                            <thead>
-                                <tr>
-                                    {filterTableHead()}
-                                    <th>
-                                        <FaCheck className="confirmed-icon"></FaCheck>
+                <div className="data-wrapper">
+                    <div className="card-table-wrapper">
+                        <div className="card-table-scroll">
+                            <table className="content-table sticky">
+                                <thead>
+                                    <tr>
+                                        {filterTableHead()}
+                                        <th>
+                                            <FaCheck className="confirmed-icon"></FaCheck>
                                             Confirmados
                                     </th>
-                                    <th>
-                                        <FaSkull className="deaths-icon"></FaSkull>
+                                        <th>
+                                            <FaSkull className="deaths-icon"></FaSkull>
                                             Mortes
                                     </th>
-                                    <th>
-                                        <GiPadlock className="lockdown-icon"></GiPadlock>
+                                        <th>
+                                            <GiPadlock className="lockdown-icon"></GiPadlock>
                                             Dias em lockDown
                                     </th>
-                                    <th>
-                                        <GiMoneyStack className="money-icon"></GiMoneyStack>
+                                        <th>
+                                            <GiMoneyStack className="money-icon"></GiMoneyStack>
                                             Total gasto
                                     </th>
-                                    <th>
-                                        <GiBed className="leitos-icon"></GiBed>
+                                        <th>
+                                            <GiBed className="leitos-icon"></GiBed>
                                             Leitos ocupados
                                     </th>
-                                </tr>
-                            </thead>
-                            <tbody >
-                                {filteredTable.map(filteredCoutryState => (
-                                    <tr key={filteredCoutryState.uf}>
-                                        {filterTableData(filteredCoutryState)}
-                                        <td>{filteredCoutryState.cases}</td>
-                                        <td>{filteredCoutryState.deaths}</td>
-                                        <td>{Math.floor(Math.random() * (300 - 40) + 40)}</td>
-                                        <td>R$: {Math.floor(Math.random() * (60000000 - 20000000) + 20000000)}</td>
-                                        <td>{Math.floor(Math.random() * (300 - 40) + 40)}</td>
                                     </tr>
-                                ))}
-                            </tbody>
-                        </table>
+                                </thead>
+                                <tbody >
+                                    {filteredTable.map(filteredCoutryState => (
+                                        <tr key={filteredCoutryState.uf}>
+                                            {filterTableData(filteredCoutryState)}
+                                            <td>{filteredCoutryState.cases}</td>
+                                            <td>{filteredCoutryState.deaths}</td>
+                                            <td>{Math.floor(Math.random() * (300 - 40) + 40)}</td>
+                                            <td>R$: {Math.floor(Math.random() * (60000000 - 20000000) + 20000000)}</td>
+                                            <td>{Math.floor(Math.random() * (300 - 40) + 40)}</td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div className="top-five-cards">
+                        <div className="highest-title">
+                            <h1>Estados com mais mortos</h1>
+                        </div>
+                        <div className="highest-card">
+                            {highestDeathsByState.map(e => (
+                                <div className="highest-stats">
+                                    <div className="highest-stats-wrapper">
+                                        <p className="state-name">
+                                            {e.state}
+                                        </p>
+                                        <p className="state-amount">
+                                            {e.deaths}
+                                        </p>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
                     </div>
                 </div>
-                <div className="top-five-cards">
-
-                </div>
             </section>
-
-
-
-            {/* <input type="text" onChange={e => setTitle(e.target.value)} />
-            <button onClick={handleUpdate}>update</button> */}
         </div>
     );
 }

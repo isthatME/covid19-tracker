@@ -1,6 +1,10 @@
 .card-highlights {
     width: 100%;
 }
+.data-wrapper {
+    display: flex;
+    margin: 2rem 0 0 2rem;
+}
 .card-title {
     display: flex;
     justify-content: center;
@@ -33,6 +37,7 @@
 .country-stats > h1{
     display: flex;
     justify-content: center;
+    margin-bottom: 1rem;
 }
 .country-stats p {
     margin: 0 5%;
@@ -55,6 +60,9 @@
 .location-icon {
     color: rgb(211, 68, 68);
 }
+.lockdown-icon {
+    color: rgb(206, 165, 31);
+}
 .confirmed-icon {
     color: chartreuse;
 }
@@ -70,6 +78,7 @@ tbody{
     display: block;  
     overflow: auto;
     height: 600px;
+    margin: 2rem 0;
   }
   thead, tbody tr {
     display:table;
@@ -121,6 +130,43 @@ table {
     padding: 1rem;
 }
 
+/* top 5 */
+.top-five-cards{
+  
+}
+.highest-stats{
+    background-color: rgba(0,0,0,0.2);
+    border-radius: 30px;
+    width: 15rem;
+    margin: 1rem;
+    height: auto;
+    display: flex;
+    justify-content: center;
+}
+.highest-title{
+    display: flex;
+    justify-content: center;
+}
+.highest-stats-wrapper{
+    display: flex;
+    padding: 5rem 0;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+}
+.highest-stats-wrapper p {
+    padding-top: 0.8rem;
+}
+.highest-card {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+.state-name {
+    
+}
+
+/* scroll */
 ::-webkit-scrollbar-track {
     background: transparent;
 }
