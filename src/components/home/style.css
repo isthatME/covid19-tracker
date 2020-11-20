@@ -9,6 +9,8 @@
     display: flex;
     justify-content: center;
     margin: 5rem;
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.5em;
 }
 .card-wrapper {
     display: flex;
@@ -91,11 +93,13 @@ thead {
 table {
     width: 70rem;
 }
+.content-table.sticky h1 {
+    text-align: center;
+    margin-top: 1rem;
+}
 .select-filter {
     background-color: transparent;
     color: whitesmoke;
-    border: green 1px solid;
-    border-radius: 30px;
     height: auto;
     width: auto;
     padding: 0.7rem;
@@ -143,10 +147,7 @@ table {
     padding: 1rem;
 }
 
-/* top 5 */
-.top-five-cards{
-  
-}
+/* top 5 highest number of deaths*/
 .highest-stats{
     background-color: rgba(0,0,0,0.2);
     border-radius: 30px;
@@ -155,6 +156,9 @@ table {
     height: auto;
     display: flex;
     justify-content: center;
+}
+.highest-stats-wrapper p {
+    font-size: 1.4em;
 }
 .highest-title{
     display: flex;
@@ -178,6 +182,23 @@ table {
 .state-name {
     
 }
+
+/* top 5 highest/lowest money spent during the pandemic */
+
+.highest-money-spent-stats {
+    display: flex;
+    justify-content: center;
+}
+.money-spent-wrapper h1{
+    font-family: 'Libre Baskerville', serif;
+    font-size: 2em;
+    text-align: center;
+}
+.money-spent-title {
+    margin-bottom: 2rem;
+}
+
+
 
 /* scroll */
 ::-webkit-scrollbar-track {
