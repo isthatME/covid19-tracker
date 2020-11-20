@@ -1,7 +1,7 @@
 import Axios from 'axios'
-import '../home/style.css'
+import './style.css'
 import React, { useEffect, useState } from 'react'
-import '../home/style.css'
+import './style.css'
 import { FaSkull, FaCheck, FaLocationArrow } from "react-icons/fa";
 import { GiLifeBar, GiPadlock, GiMoneyStack, GiBed } from "react-icons/gi";
 
@@ -132,16 +132,16 @@ function Index() {
             <section className="card-table">
                 <div className="card-table-filter">
                     <h1>Mais informações</h1>
-                    <select id="" onChange={e => setTableQuery(e.target.value)}>
-                        <option value="">Estados</option>
-                        <option value="countries">Países</option>
-                        <option value="continents">Continentes</option>
-                    </select>
                 </div>
                 <div className="data-wrapper">
                     <div className="card-table-wrapper">
                         <div className="card-table-scroll">
                             <table className="content-table sticky">
+                                <select className="select-filter" onChange={e => setTableQuery(e.target.value)}>
+                                    <option value="">Estados</option>
+                                    <option value="countries">Países</option>
+                                    <option value="continents">Continentes</option>
+                                </select>
                                 <thead>
                                     <tr>
                                         {filterTableHead()}

@@ -83,13 +83,28 @@ tbody{
   thead, tbody tr {
     display:table;
     width:100%;
-    table-layout:fixed;/* even columns width , fix width of table too*/
+    table-layout:fixed;
 }
 thead {
-    width: calc( 100% - 1em )/* scrollbar is average 1em/16px width, remove it from thead width */
+    width: calc( 100% - 1em )
 }
 table {
     width: 70rem;
+}
+.select-filter {
+    background-color: transparent;
+    color: whitesmoke;
+    border: green 1px solid;
+    border-radius: 30px;
+    height: auto;
+    width: auto;
+    padding: 0.7rem;
+    margin: 1rem;
+    float: right;
+    outline-style: none;
+}
+.select-filter option {
+    color: black;
 }
 
 .card-table-wrapper {
@@ -99,13 +114,11 @@ table {
 .card-table-scroll {
     width: fit-content;
     background-color: rgba(0,0,0,0.2);
+    border-radius: 20px;
+    margin-bottom: 2rem;
 }
 .content-table{
     margin: 0 3rem;
-}
-.scroll-data{
-
-
 }
 .content-table.sticky{
     border-collapse: collapse;
