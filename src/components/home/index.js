@@ -14,9 +14,11 @@ function Index() {
     if (res.length === 0) {
         getStats()
     }
-    var highestDeathsByState = res.filter((e, i) => { if (i < 5) return e });
-    var highestMoneySpent = filteredTable.sort((a, b) => (a.moneySpent < b.moneySpent) ? 1 : -1).filter((e, i) => { if (i < 5) return e });
-    var lowestMoneySpent = filteredTable.sort((a, b) => (a.moneySpent > b.moneySpent) ? 1 : -1).filter((e, i) => { if (i < 5) return e });
+    
+    var highestDeathsByState = res.sort((a, b) => (a.deaths < b.deaths) ? 1 : -1).filter((e, i) => { if (i < 5) return e });
+    console.log(highestDeathsByState)
+    var highestMoneySpent = res.sort((a, b) => (a.moneySpent < b.moneySpent) ? 1 : -1).filter((e, i) => { if (i < 5) return e });
+    var lowestMoneySpent = res.sort((a, b) => (a.moneySpent > b.moneySpent) ? 1 : -1).filter((e, i) => { if (i < 5) return e });
 
     useEffect(() => {
         async function fetchData() {
@@ -59,6 +61,11 @@ function Index() {
 
     async function getStats() {
         const req = await Axios.get(`https://covid19-brazil-api.now.sh/api/report/v1/`)
+        req.data.data.map(e => {
+            e.moneySpent = Math.floor(Math.random() * (60000000 - 20000000) + 20000000)
+            e.daysLocked = Math.floor(Math.random() * (300 - 40) + 40)
+            e.occupiedBeds = Math.floor(Math.random() * (300 - 40) + 40)
+        })
         setRes(req.data.data);
     }
 
@@ -198,28 +205,31 @@ function Index() {
                             </table>
                         </div>
                     </div>
-                    <div className="top-five-cards">
-                        <div className="highest-title">
-                            <h1>Estados com mais mortos</h1>
-                        </div>
-                        <div className="highest-card">
-                            {highestDeathsByState.map(e => (
-                                <div className="highest-stats" key={e.uf}>
-                                    <div className="highest-stats-wrapper">
-                                        <p className="state-name">
-                                            {e.state}
-                                        </p>
-                                        <p className="state-amount">
-                                            {e.deaths}
-                                        </p>
-                                    </div>
+                </div>
+            </section>
+            <section className="money-spent-stats">
+                <div className="money-spent-wrapper">
+                    <div className="money-spent-title">
+                        <h1>Estados com maior número de mortos</h1>
+                    </div>
+                    <div className="highest-card">
+                        {highestDeathsByState.map(e => (
+                            <div className="highest-stats" key={e.uf}>
+                                <div className="highest-stats-wrapper">
+                                    <p className="state-name">
+                                        {e.state}
+                                    </p>
+                                    <p className="state-amount">
+                                    <FaSkull className="deaths-icon"></FaSkull>
+                                        {e.deaths}
+                                    </p>
                                 </div>
-                            ))}
-                        </div>
+                            </div>
+                        ))}
                     </div>
                 </div>
             </section>
-            <section className="highest-money-spent-stats">
+            <section className="money-spent-stats">
                 <div className="money-spent-wrapper">
                     <div className="money-spent-title">
                         <h1>Estados que mais gastaram durante a pandemia</h1>
