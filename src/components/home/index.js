@@ -16,7 +16,8 @@ function Index() {
     }
     
     var highestDeathsByState = res.sort((a, b) => (a.deaths < b.deaths) ? 1 : -1).filter((e, i) => { if (i < 5) return e });
-    console.log(highestDeathsByState)
+    var totalMoneySpent = res.reduce((accum,item) => accum + item.moneySpent, 0)
+    console.log(totalMoneySpent)
     var highestMoneySpent = res.sort((a, b) => (a.moneySpent < b.moneySpent) ? 1 : -1).filter((e, i) => { if (i < 5) return e });
     var lowestMoneySpent = res.sort((a, b) => (a.moneySpent > b.moneySpent) ? 1 : -1).filter((e, i) => { if (i < 5) return e });
 
@@ -24,7 +25,7 @@ function Index() {
         async function fetchData() {
             const req = await Axios.get(`https://covid19-brazil-api.now.sh/api/report/v1/countries`)
             req.data.data.map(e => {
-                e.moneySpent = Math.floor(Math.random() * (10 - 20000000) + 20000000)
+                e.moneySpent = Math.floor(Math.random() * (60000000 - 20000000) + 20000000)
                 e.daysLocked = Math.floor(Math.random() * (300 - 40) + 40)
                 e.occupiedBeds = Math.floor(Math.random() * (300 - 40) + 40)
             })
@@ -126,7 +127,7 @@ function Index() {
         <div className="content">
             <section className="card-highlights">
                 <div className="card-title">
-                    <h1>Estatistica em alguns países</h1>
+                    <h1>Estatística em alguns países</h1>
                 </div>
                 <div className="card-wrapper">
                     {stateHighLighted.filter(e => e.country === 'Brazil' || e.country === 'Italy' || e.country === 'China' || e.country === 'Argentina').map(filteredCountry => (
