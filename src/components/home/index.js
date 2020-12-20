@@ -3,7 +3,7 @@ import './style.css'
 import React, { useEffect, useState } from 'react'
 import './style.css'
 import { FaSkull, FaCheck, FaLocationArrow } from "react-icons/fa";
-import { GiLifeBar, GiPadlock, GiMoneyStack, GiBed } from "react-icons/gi";
+import { GiLifeBar } from "react-icons/gi";
 
 function Index() {
     const [stateHighLighted, setStateHighLigth] = useState([])
@@ -14,22 +14,15 @@ function Index() {
     if (res.length === 0) {
         getStats()
     }
-    
+
+    //
     var highestDeathsByState = res.sort((a, b) => (a.deaths < b.deaths) ? 1 : -1).filter((e, i) => { if (i < 5) return e });
-    var totalMoneySpent = res.reduce((accum,item) => accum + item.moneySpent, 0)
-    console.log(totalMoneySpent)
-    var highestMoneySpent = res.sort((a, b) => (a.moneySpent < b.moneySpent) ? 1 : -1).filter((e, i) => { if (i < 5) return e });
-    var lowestMoneySpent = res.sort((a, b) => (a.moneySpent > b.moneySpent) ? 1 : -1).filter((e, i) => { if (i < 5) return e });
 
     useEffect(() => {
         async function fetchData() {
             const req = await Axios.get(`https://covid19-brazil-api.now.sh/api/report/v1/countries`)
-            req.data.data.map(e => {
-                e.moneySpent = Math.floor(Math.random() * (60000000 - 20000000) + 20000000)
-                e.daysLocked = Math.floor(Math.random() * (300 - 40) + 40)
-                e.occupiedBeds = Math.floor(Math.random() * (300 - 40) + 40)
-            })
-            setStateHighLigth(req.data.data)
+            setStateHighLigth(req.data.data.sort((a, b) => (a.deaths < b.deaths) ? 1 : -1))
+            console.log(req)
             return req
         }
         fetchData();
@@ -38,20 +31,10 @@ function Index() {
         async function fetchQuery() {
             if (tableQuery === '' || tableQuery === 'countries') {
                 const req = await Axios.get(`https://covid19-brazil-api.now.sh/api/report/v1/${tableQuery}`)
-                req.data.data.map(e => {
-                    e.moneySpent = Math.floor(Math.random() * (60000000 - 20000000) + 20000000)
-                    e.daysLocked = Math.floor(Math.random() * (300 - 40) + 40)
-                    e.occupiedBeds = Math.floor(Math.random() * (300 - 40) + 40)
-                })
-                setFilteredTable(req.data.data)
+                setFilteredTable(req.data.data.sort((a, b) => (a.deaths < b.deaths) ? 1 : -1))
                 return req
             } else {
                 const req = await Axios.get(`https://corona.lmao.ninja/v2/continents`)
-                req.data.map(e => {
-                    e.moneySpent = Math.floor(Math.random() * (60000000 - 20000000) + 20000000)
-                    e.daysLocked = Math.floor(Math.random() * (300 - 40) + 40)
-                    e.occupiedBeds = Math.floor(Math.random() * (1000 - 50) + 50)
-                })
                 setFilteredTable(req.data)
                 return req
             }
@@ -62,11 +45,6 @@ function Index() {
 
     async function getStats() {
         const req = await Axios.get(`https://covid19-brazil-api.now.sh/api/report/v1/`)
-        req.data.data.map(e => {
-            e.moneySpent = Math.floor(Math.random() * (60000000 - 20000000) + 20000000)
-            e.daysLocked = Math.floor(Math.random() * (300 - 40) + 40)
-            e.occupiedBeds = Math.floor(Math.random() * (300 - 40) + 40)
-        })
         setRes(req.data.data);
     }
 
@@ -160,7 +138,7 @@ function Index() {
                     <div className="card-table-wrapper">
                         <div className="card-table-scroll">
                             <table className="content-table sticky">
-                    <h1>Mais informações</h1>
+                                <h1>Mais informações</h1>
                                 <select className="select-filter" onChange={e => setTableQuery(e.target.value)}>
                                     <option value="">Estados</option>
                                     <option value="countries">Países</option>
@@ -177,18 +155,6 @@ function Index() {
                                             <FaSkull className="deaths-icon"></FaSkull>
                                             Mortes
                                     </th>
-                                        <th>
-                                            <GiPadlock className="lockdown-icon"></GiPadlock>
-                                            Dias em lockDown
-                                    </th>
-                                        <th>
-                                            <GiMoneyStack className="money-icon"></GiMoneyStack>
-                                            Total gasto
-                                    </th>
-                                        <th>
-                                            <GiBed className="leitos-icon"></GiBed>
-                                            Leitos ocupados
-                                    </th>
                                     </tr>
                                 </thead>
                                 <tbody >
@@ -197,9 +163,6 @@ function Index() {
                                             {filterTableData(filteredCoutryState)}
                                             <td>{filteredCoutryState.cases}</td>
                                             <td>{filteredCoutryState.deaths}</td>
-                                            <td>{filteredCoutryState.daysLocked}</td>
-                                            <td>R$: {filteredCoutryState.moneySpent}</td>
-                                            <td>{filteredCoutryState.occupiedBeds}</td>
                                         </tr>
                                     ))}
                                 </tbody>
@@ -221,52 +184,8 @@ function Index() {
                                         {e.state}
                                     </p>
                                     <p className="state-amount">
-                                    <FaSkull className="deaths-icon"></FaSkull>
+                                        <FaSkull className="deaths-icon"></FaSkull>
                                         {e.deaths}
-                                    </p>
-                                </div>
-                            </div>
-                        ))}
-                    </div>
-                </div>
-            </section>
-            <section className="money-spent-stats">
-                <div className="money-spent-wrapper">
-                    <div className="money-spent-title">
-                        <h1>Estados que mais gastaram durante a pandemia</h1>
-                    </div>
-                    <div className="highest-card">
-                        {highestMoneySpent.map(e => (
-                            <div className="highest-stats" key={e.uf}>
-                                <div className="highest-stats-wrapper">
-                                    <p className="state-name">
-                                        {e.state}
-                                    </p>
-                                    <p className="state-amount">
-                                        <GiMoneyStack className="money-icon"></GiMoneyStack>
-                                        {e.moneySpent}
-                                    </p>
-                                </div>
-                            </div>
-                        ))}
-                    </div>
-                </div>
-            </section>
-            <section className="money-spent-stats">
-                <div className="money-spent-wrapper">
-                    <div className="money-spent-title">
-                        <h1>Estados que menos gastaram durante a pandemia</h1>
-                    </div>
-                    <div className="highest-card">
-                        {lowestMoneySpent.map(e => (
-                            <div className="highest-stats" key={e.uf}>
-                                <div className="highest-stats-wrapper">
-                                    <p className="state-name">
-                                        {e.state}
-                                    </p>
-                                    <p className="state-amount">
-                                        <GiMoneyStack className="money-icon"></GiMoneyStack>
-                                        {e.moneySpent}
                                     </p>
                                 </div>
                             </div>
