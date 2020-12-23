@@ -148,42 +148,6 @@ table {
     padding: 1rem;
 }
 
-/* top 5 highest number of deaths*/
-.highest-stats{
-    background-color: rgba(0,0,0,0.2);
-    border-radius: 30px;
-    width: 15rem;
-    margin: 1rem;
-    height: auto;
-    display: flex;
-    justify-content: center;
-}
-.highest-stats-wrapper p {
-    font-size: 1.4em;
-}
-.highest-title{
-    display: flex;
-    justify-content: center;
-}
-.highest-stats-wrapper{
-    display: flex;
-    padding: 5rem 0;
-    flex-direction: column;
-    justify-content: center;
-    text-align: center;
-}
-.highest-stats-wrapper p {
-    padding-top: 0.8rem;
-}
-.highest-card {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-}
-.state-name {
-    
-}
-
 /* top 5 highest/lowest money spent during the pandemic */
 
 .highest-money-spent-stats {
